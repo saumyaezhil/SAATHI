@@ -127,6 +127,21 @@
             <div id="countdown-timer"></div>
         </section>
 
+        <!-- Rep Count Page -->
+       <!-- Rep Count Page -->
+<section id="rep-count-page" style="display: none;">
+    <h2>REP COUNT</h2>
+    <p>Track your reps here.</p>
+    
+    <!-- Space reserved for future content -->
+    <div id="future-content-space" style="margin: 20px 0; height: 250px; border: 1px dashed #ccc;">
+        <!-- Future content will be added here -->
+    </div>
+    
+    <button id="continue-to-log">Next</button>
+</section>
+
+
         <!-- Exercise Log Page -->
         <section id="log-page" style="display: none;">
             <h2>Exercise Log</h2>
@@ -177,6 +192,18 @@
             document.getElementById('personalization').style.display = 'block';
             // Set session storage to prevent the overlay from showing again
             sessionStorage.setItem('overlayClosed', 'true');
+        });
+
+        // Transition to REP COUNT page after camera countdown
+        document.getElementById('continue-camera').addEventListener('click', function() {
+            document.getElementById('camera-page').style.display = 'none';
+            document.getElementById('rep-count-page').style.display = 'block';
+        });
+
+        // Transition to Log Page after REP COUNT
+        document.getElementById('continue-to-log').addEventListener('click', function() {
+            document.getElementById('rep-count-page').style.display = 'none';
+            document.getElementById('log-page').style.display = 'block';
         });
     </script>
 </body>
