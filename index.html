@@ -101,7 +101,6 @@
         <section id="log-page" style="display: none;">
             <h2>Exercise Log</h2>
             <ul id="exercise-log"></ul>
-            <button id="do-another-exercise">Do Another Exercise</button>
             <button id="finish-workout-log">Finish Workout</button>
         </section>
 
@@ -109,12 +108,22 @@
         <section id="workout-summary" style="display: none;">
             <h2>Workout Summary</h2>
             <ul id="summary-log"></ul>
-        </section>
+      </section>
     </div>
   <br><br>
+  <div id="feedback-section" style="display:none; text-align:center;">
+    <h2>Feedback</h2>
+    <iframe src="https://form.jotform.com/242535238308456" width="100%" height="500" frameborder="0"></iframe>
+  </div>
    <img id="advertisement" src="https://i.postimg.cc/KzYN3fnh/output-onlinepngtools.png" alt="Advertisement">
       
-  </div>
-    <script src="script.js"></script>
+  <script>
+    // Show log section and replace "Do Another Exercise" button with "Feedback"
+    document.getElementById('finish-workout-log').addEventListener('click', function() {
+        // Hide the log page and show the feedback form
+        document.getElementById('log-page').style.display = 'none';
+        document.getElementById('feedback-section').style.display = 'block';
+    });
+  </script>
 </body>
 </html>
