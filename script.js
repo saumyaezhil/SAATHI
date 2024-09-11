@@ -4,7 +4,7 @@ const exercises = {
     ex3: { name: 'Bicep Curls', video: 'https://www.youtube.com/embed/JOib_oyosu0', requiresWeights: true },
     ex4: { name: 'Triceps', video: 'https://www.youtube.com/embed/f59wGKbXZ0w', requiresWeights: true },
     ex5: { name: 'Shoulder Press', video: 'https://www.youtube.com/embed/WvLMauqrnK8', requiresWeights: true },
-    ex6: { name: 'Lateral Raises', video: 'https://www.youtube.com/embed/1AmmsXlf8MUI', requiresWeights: true },
+    ex6: { name: 'Lateral Raises', video: 'https://www.youtube.com/embed/1AmmsXlf8#0056b3MUI', requiresWeights: true },
     ex7: { name: 'Chest Flies', video: 'https://www.youtube.com/embed/tGXIQR89-JE', requiresWeights: true },
     ex8: { name: 'Reverse Flies', video: 'https://www.youtube.com/embed/vJYkqD7a0gM', requiresWeights: true },
     ex9: { name: 'Lat pull down', video: 'https://www.youtube.com/embed/dhJ7QJPvqqU', requiresWeights: true },
