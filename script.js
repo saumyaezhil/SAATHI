@@ -1,40 +1,41 @@
-// Affirmation data
-const affirmations = {
-    energetic: "You're full of energy today! Let's make the most of it!",
-    tired: "You’ve got this, even on tired days! Let's get moving!",
-    sore: "A little soreness means progress. Let’s stretch and strengthen!"
+const exercises = {
+    ex1: { name: 'Rowing', video: 'https://www.youtube.com/embed/DHA7QGDa2qg', requiresWeights: true },
+    ex2: { name: 'Chest Press', video: 'https://www.youtube.com/embed/dTe9CB9Zous', requiresWeights: true },
+    ex3: { name: 'Bicep Curls', video: 'https://www.youtube.com/embed/JOib_oyosu0', requiresWeights: true },
+    ex4: { name: 'Triceps', video: 'https://www.youtube.com/embed/f59wGKbXZ0w', requiresWeights: true },
+    ex5: { name: 'Shoulder Press', video: 'https://www.youtube.com/embed/WvLMauqrnK8', requiresWeights: true },
+    ex6: { name: 'Lateral Raises', video: 'https://www.youtube.com/embed/1AmmsXlf8MUI', requiresWeights: true },
+    ex7: { name: 'Chest Flies', video: 'https://www.youtube.com/embed/tGXIQR89-JE', requiresWeights: true },
+    ex8: { name: 'Reverse Flies', video: 'https://www.youtube.com/embed/vJYkqD7a0gM', requiresWeights: true },
+    ex9: { name: 'Lat pull down', video: 'https://www.youtube.com/embed/dhJ7QJPvqqU', requiresWeights: true },
+    ex10: { name: 'Leg side raises', video: 'https://www.youtube.com/embed/8Dh6KIJQMeI', requiresWeights: true },
+    ex11: { name: 'Leg Press', video: 'https://www.youtube.com/embed/-4Tm7aP-uI0', requiresWeights: true }
 };
 
-/// Exercises Data
- exercises = {
-    'bicep': { name: 'Bicep Curls', video: 'https://www.youtube.com/embed/VIDEO_ID_FOR_BICEP_CURLS', requiresWeights: true },
-    'tricep': { name: 'Tricep Throwback', video: 'https://www.youtube.com/embed/VIDEO_ID_FOR_TRICEP_THROWBACK', requiresWeights: true },
-    'rowing': { name: 'Rowing', video: 'https://www.youtube.com/embed/VIDEO_ID_FOR_ROWING', requiresWeights: true },
-    'chest': { name: 'Chest Press', video: 'https://www.youtube.com/embed/VIDEO_ID_FOR_CHEST_PRESS', requiresWeights: true },
-    'lateral-raises': { name: 'Lateral Raises', video: 'https://www.youtube.com/embed/VIDEO_ID_FOR_LATERAL_RAISES', requiresWeights: true }
-};
-
-
-// Declare currentExercise only once outside
+let selectedWeight = 5;
 let currentExercise;
-let selectedWeight;
+let exerciseLog = [];
 let countdownInterval;
-const exerciseLog = [];
 
-// Handle form submission
+// Handle form submission: Redirect to exercise selection
 document.getElementById('personalize-form').addEventListener('submit', function (event) {
     event.preventDefault();
-    const focus = document.getElementById('focus').value;
-    currentExercise = exercises[focus];  // No need to redeclare here, just assign it
+    document.getElementById('personalization').style.display = 'none';
+    document.getElementById('select-exercise').style.display = 'block';
+});
 
-    // Update the exercise name and video
+// Handle next button on exercise selection: Go to weight selection
+document.getElementById('next-to-weight').addEventListener('click', function () {
+    const focus = document.getElementById('focus').value;
+    currentExercise = exercises[focus];
+
+    // Update the exercise name and show weights if required
     document.getElementById('exercise-name').textContent = currentExercise.name;
     document.getElementById('weights').style.display = currentExercise.requiresWeights ? 'block' : 'none';
 
-    document.getElementById('personalization').style.display = 'none';
+    document.getElementById('select-exercise').style.display = 'none';
     document.getElementById('exercise').style.display = 'block';
 });
-
 
 // Update weight display
 document.getElementById('weights').addEventListener('input', function () {
@@ -63,124 +64,91 @@ document.getElementById('continue-video').addEventListener('click', function () 
 // Handle posture correction skip
 document.getElementById('skip-camera').addEventListener('click', function () {
     document.getElementById('posture-correction').style.display = 'none';
-    document.getElementById('personalization').style.display = 'block'; // Go back to start
+    startCountdown();
 });
 
-// Handle camera enable
+// Camera activation logic
 document.getElementById('enable-camera').addEventListener('click', function () {
-    document.getElementById('posture-correction').style.display = 'none';
-    document.getElementById('camera-page').style.display = 'block';
-    startCamera();
-});
-
-// Handle camera continue
-document.getElementById('continue-camera').addEventListener('click', function () {
-    document.getElementById('camera-page').style.display = 'none';
-    stopCamera();
-    startCountdown();
-});
-
-// Handle posture correction skip
-document.getElementById('skip-camera').addEventListener('click', function () {
-    document.getElementById('posture-correction').style.display = 'none';
-    startCountdown();
-});
-
-// Start camera
-function startCamera() {
     const video = document.getElementById('camera-feed');
-    const countdownElement = document.getElementById('camera-countdown');
 
     navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
+        .then(function (stream) {
             video.srcObject = stream;
-            video.play();
-            let countdown = 10;
-            countdownElement.textContent = `Posture correction in: ${countdown} seconds`;
-            countdownInterval = setInterval(() => {
-                countdownElement.textContent = `Posture correction in: ${countdown--} seconds`;
-                if (countdown < 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.textContent = 'Posture correction complete.';
-                }
-            }, 1000);
+            document.getElementById('camera-page').style.display = 'block';
+            document.getElementById('posture-correction').style.display = 'none';
         })
-        .catch(error => console.error('Error accessing camera:', error));
-}
+        .catch(function (err) {
+            console.error("Error accessing the camera: ", err);
+        });
+});
 
-// Stop camera
-function stopCamera() {
-    const video = document.getElementById('camera-feed');
-    const stream = video.srcObject;
-    if (stream) {
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-    }
-    video.srcObject = null;
-}
+// Handle "Continue" button on camera page
+document.getElementById('continue-camera').addEventListener('click', function () {
+    document.getElementById('camera-page').style.display = 'none';
+    startCountdown();  // Proceed to the countdown page after camera use
+});
 
-// Start countdown
+// Countdown timer logic
 function startCountdown() {
-    document.getElementById('exercise').style.display = 'none';
-    document.getElementById('countdown-log').style.display = 'block';
     let countdown = 10;
     const countdownElement = document.getElementById('countdown-timer');
-    countdownElement.textContent = `Exercise starts in: ${countdown} seconds`;
-    const countdownInterval = setInterval(() => {
-        countdownElement.textContent = `Exercise starts in: ${countdown--} seconds`;
-        if (countdown < 0) {
+    countdownElement.textContent = `Starting in ${countdown} seconds...`;
+    document.getElementById('countdown-log').style.display = 'block';
+
+    countdownInterval = setInterval(function () {
+        countdown--;
+        countdownElement.textContent = `Starting in ${countdown} seconds...`;
+
+        if (countdown <= 0) {
             clearInterval(countdownInterval);
-            countdownElement.textContent = 'Start Exercise!';
-            document.getElementById('done-exercise').style.display = 'block';
+            document.getElementById('countdown-log').style.display = 'none';
+            document.getElementById('log-page').style.display = 'block';
+            logExercise();
         }
     }, 1000);
 }
 
-// Handle "Done" button
-document.getElementById('done-exercise').addEventListener('click', function () {
-    exerciseLog.push({ exercise: currentExercise.name, weight: selectedWeight });
-    document.getElementById('countdown-log').style.display = 'none';
-    document.getElementById('exercise').style.display = 'block';
-});
 
-// Update exercise log page
-function updateLogPage() {
-    const logList = document.getElementById('exercise-log');
-    logList.innerHTML = '';
-    exerciseLog.forEach(log => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${log.exercise}: ${log.weight} kg`;
-        logList.appendChild(listItem);
-    });
+// Countdown timer logic
+function startCountdown() {
+    let countdown = 10;
+    const countdownElement = document.getElementById('countdown-timer');
+    countdownElement.textContent = `Starting in ${countdown} seconds...`;
+    document.getElementById('countdown-log').style.display = 'block';
+
+    countdownInterval = setInterval(function () {
+        countdown--;
+        countdownElement.textContent = `Starting in ${countdown} seconds...`;
+
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown-log').style.display = 'none';
+            document.getElementById('log-page').style.display = 'block';
+            logExercise();
+        }
+    }, 1000);
 }
 
-// Handle "Do Another Exercise" button
-document.getElementById('do-another-exercise').addEventListener('click', function () {
-    document.getElementById('log-page').style.display = 'none';
-    document.getElementById('personalization').style.display = 'block'; // Go back to start
-});
-
-// Handle "Finish Workout" button on the log page
-document.getElementById('finish-workout-log').addEventListener('click', function () {
-    document.getElementById('log-page').style.display = 'none';
-    document.getElementById('workout-summary').style.display = 'block';
-    updateSummaryPage();
-});
-
-// Handle "Finish Workout" button on the exercise page
+// Handle "Finish Workout" button after exercise: Redirect back to exercise selection
 document.getElementById('finish-workout-exercise').addEventListener('click', function () {
     document.getElementById('exercise').style.display = 'none';
-    document.getElementById('log-page').style.display = 'block';
-    updateLogPage();
+    logExercise(); // Log the completed exercise
+    document.getElementById('select-exercise').style.display = 'block';
 });
 
-// Update workout summary page
-function updateSummaryPage() {
-    const summaryList = document.getElementById('summary-log');
-    summaryList.innerHTML = '';
-    exerciseLog.forEach(log => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${log.exercise}: ${log.weight} kg`;
-        summaryList.appendChild(listItem);
-    });
+// Log the current exercise and display it
+function logExercise() {
+    const logEntry = `${currentExercise.name}, Weight: ${selectedWeight} kg`;
+    exerciseLog.push(logEntry);
+
+    const logElement = document.getElementById('exercise-log');
+    const logItem = document.createElement('li');
+    logItem.textContent = logEntry;
+    logElement.appendChild(logItem);
 }
+
+// Handle "Do Another Exercise"
+document.getElementById('do-another-exercise').addEventListener('click', function () {
+    document.getElementById('log-page').style.display = 'none';
+    document.getElementById('select-exercise').style.display = 'block';
+});
