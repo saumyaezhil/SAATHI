@@ -5,31 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saathi Fitness App</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add inline CSS for overlay */
+        #overlay-image {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: center;
+        }
+        #overlay-image img {
+            margin-top: 10%;
+            max-width: 90%;
+            max-height: 80%;
+        }
+        #close-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
+    <!-- Overlay Image -->
+    <div id="overlay-image">
+        <button id="close-overlay">×</button>
+        <img src="https://i.postimg.cc/MHhxzZtS/subscription-planfinal.png" alt="Subscription Image">
+    </div>
+
     <div class="container">
         <!-- Personalization Step -->
         <section id="personalization">
             <h1>Welcome to SAATHI</h1>
-            
             <form id="personalize-form">
                 <label for="details"><h2>Please enter your personal details below:</h2></label>
-                
                 <div class="form-group">
                     <label for="Age"><h5>Age in years:</h5></label>
                     <input type="number" id="Age" name="Age" required>
                 </div>
-
                 <div class="form-group">
                     <label for="Weight"><h5>Weight in kgs:</h5></label>
                     <input type="number" id="Weight" name="Weight" required>
                 </div>
-
                 <div class="form-group">
                     <label for="Height"><h5>Height in cm:</h5></label>
                     <input type="number" id="Height" name="Height" required>
                 </div>
-
                 <br>
                 <input type="submit" value="Submit">
             </form>
@@ -58,11 +91,9 @@
         <!-- Exercise Recommendation Step -->
         <section id="exercise" style="display: none;">
             <h2>Selected Exercise: <span id="exercise-name"></span></h2>
-
             <label for="weights">Select Weights (kg):</label>
             <input type="range" id="weights" min="1" max="50" value="5">
             <p>Selected Weight: <span id="selected-weight">5</span> kg</p>
-
             <button id="watch-video">Watch Video Tutorial</button>
             <button id="skip-video">Skip Video Tutorial</button>
             <button id="finish-workout-exercise">Finish Workout</button>
@@ -94,7 +125,6 @@
         <!-- Countdown and Log Page -->
         <section id="countdown-log" style="display: none;">
             <div id="countdown-timer"></div>
-            <button id="done-exercise">Done</button>
         </section>
 
         <!-- Exercise Log Page -->
@@ -102,28 +132,52 @@
             <h2>Exercise Log</h2>
             <ul id="exercise-log"></ul>
             <button id="finish-workout-log">Finish Workout</button>
+            <button id="do-another-exercise">Do Another Exercise</button>
         </section>
 
         <!-- Workout Summary Page -->
         <section id="workout-summary" style="display: none;">
             <h2>Workout Summary</h2>
             <ul id="summary-log"></ul>
-      </section>
+            <button id="finish-workout-summary">Finish</button>
+            <button id="rate-workout">Rate Workout</button>
+        </section>
+
+        <!-- Finish Workout Page -->
+        <section id="finish-workout-page" style="display:none;">
+            <h2>Finish Workout</h2>
+            <button id="finish">Finish</button>
+            <button id="rate">Rate Workout</button>
+        </section>
+
+        <!-- Feedback Section -->
+        <section id="feedback-section" style="display:none; text-align:center;">
+            <h2>Feedback</h2>
+            <iframe src="https://form.jotform.com/242535238308456" width="100%" height="500" frameborder="0"></iframe>
+        </section>
+
+        <!-- Advertisement -->
+        <img id="advertisement" src="https://i.postimg.cc/KzYN3fnh/output-onlinepngtools.png" alt="Advertisement">
     </div>
-  <br><br>
-  <div id="feedback-section" style="display:none; text-align:center;">
-    <h2>Feedback</h2>
-    <iframe src="https://form.jotform.com/242535238308456" width="100%" height="500" frameborder="0"></iframe>
-  </div>
-   <img id="advertisement" src="https://i.postimg.cc/KzYN3fnh/output-onlinepngtools.png" alt="Advertisement">
-      
-  <script>
-    // Show log section and replace "Do Another Exercise" button with "Feedback"
-    document.getElementById('finish-workout-log').addEventListener('click', function() {
-        // Hide the log page and show the feedback form
-        document.getElementById('log-page').style.display = 'none';
-        document.getElementById('feedback-section').style.display = 'block';
-    });
-  </script>
+
+    <!-- JavaScript -->
+    <script>
+        // Check if the overlay has been shown before
+        if (!sessionStorage.getItem('overlayClosed')) {
+            // Display the overlay image
+            document.getElementById('overlay-image').style.display = 'block';
+        } else {
+            // Display the main content if the overlay was closed before
+            document.getElementById('personalization').style.display = 'block';
+        }
+
+        // Close button for the overlay image
+        document.getElementById('close-overlay').addEventListener('click', function() {
+            document.getElementById('overlay-image').style.display = 'none';
+            document.getElementById('personalization').style.display = 'block';
+            // Set session storage to prevent the overlay from showing again
+            sessionStorage.setItem('overlayClosed', 'true');
+        });
+    </script>
 </body>
 </html>
