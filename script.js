@@ -108,32 +108,11 @@ function startCountdown() {
     }, 1000);
 }
 
-
-// Countdown timer logic
-function startCountdown() {
-    let countdown = 10;
-    const countdownElement = document.getElementById('countdown-timer');
-    countdownElement.textContent = `Starting in ${countdown} seconds...`;
-    document.getElementById('countdown-log').style.display = 'block';
-
-    countdownInterval = setInterval(function () {
-        countdown--;
-        countdownElement.textContent = `Starting in ${countdown} seconds...`;
-
-        if (countdown <= 0) {
-            clearInterval(countdownInterval);
-            document.getElementById('countdown-log').style.display = 'none';
-            document.getElementById('log-page').style.display = 'block';
-            logExercise();
-        }
-    }, 1000);
-}
-
-// Handle "Finish Workout" button after exercise: Redirect back to exercise selection
+// Handle "Finish Workout" button after exercise: Redirect to log page
 document.getElementById('finish-workout-exercise').addEventListener('click', function () {
     document.getElementById('exercise').style.display = 'none';
     logExercise(); // Log the completed exercise
-    document.getElementById('select-exercise').style.display = 'block';
+    document.getElementById('log-page').style.display = 'block';
 });
 
 // Log the current exercise and display it
@@ -147,8 +126,36 @@ function logExercise() {
     logElement.appendChild(logItem);
 }
 
-// Handle "Do Another Exercise"
+// Handle "Do Another Exercise" button
 document.getElementById('do-another-exercise').addEventListener('click', function () {
     document.getElementById('log-page').style.display = 'none';
     document.getElementById('select-exercise').style.display = 'block';
+});
+
+// Handle "Finish Workout" button on log page
+document.getElementById('finish-workout-log').addEventListener('click', function () {
+    document.getElementById('log-page').style.display = 'none';
+    document.getElementById('finish-workout-page').style.display = 'block';
+});
+
+// Handle "Finish" button on finish workout page
+document.getElementById('finish').addEventListener('click', function () {
+    window.location.href = 'index.html'; // Redirect to the first page
+});
+
+// Handle "Rate Workout" button on finish workout page
+document.getElementById('rate').addEventListener('click', function () {
+    document.getElementById('finish-workout-page').style.display = 'none';
+    document.getElementById('feedback-section').style.display = 'block';
+});
+
+// Handle "Rate Workout" button on workout summary page
+document.getElementById('rate-workout').addEventListener('click', function () {
+    document.getElementById('workout-summary').style.display = 'none';
+    document.getElementById('feedback-section').style.display = 'block';
+});
+
+// Handle "Finish" button on workout summary page
+document.getElementById('finish-workout-summary').addEventListener('click', function () {
+    window.location.href = 'index.html'; // Redirect to the first page
 });
