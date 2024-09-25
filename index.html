@@ -6,7 +6,7 @@
     <title>Saathi Fitness App</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Add inline CSS for overlay */
+        
         #overlay-image {
             display: none;
             position: fixed;
@@ -39,14 +39,12 @@
     </style>
 </head>
 <body>
-    <!-- Overlay Image -->
     <div id="overlay-image">
         <button id="close-overlay">×</button>
         <img src="https://i.postimg.cc/MHhxzZtS/subscription-planfinal.png" alt="Subscription Image">
     </div>
 
     <div class="container">
-        <!-- Personalization Step -->
         <section id="personalization">
             <h1>Welcome to SAATHI</h1>
             <form id="personalize-form">
@@ -68,7 +66,7 @@
             </form>
         </section>
 
-        <!-- Exercise Selection Step -->
+       
         <section id="select-exercise" style="display: none;">
             <h2>Select an exercise:</h2>
             <select id="focus" required>
@@ -88,7 +86,6 @@
             <button id="next-to-weight">Next</button>
         </section>
 
-        <!-- Exercise Recommendation Step -->
         <section id="exercise" style="display: none;">
             <h2>Selected Exercise: <span id="exercise-name"></span></h2>
             <label for="weights">Select Weights (kg):</label>
@@ -99,14 +96,12 @@
             <button id="finish-workout-exercise">Finish Workout</button>
         </section>
 
-        <!-- Video Page -->
         <section id="video-page" style="display: none;">
             <h2>Exercise Video</h2>
             <iframe id="video-frame" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
             <button id="continue-video">Continue</button>
         </section>
 
-        <!-- Posture Correction Page -->
         <section id="posture-correction" style="display: none;">
             <h2>Posture Correction</h2>
             <p>Would you like to enable posture correction? This requires access to your camera.</p>
@@ -114,7 +109,6 @@
             <button id="skip-camera">Skip and Continue</button>
         </section>
 
-        <!-- Camera Page -->
         <section id="camera-page" style="display: none;">
             <h2>Camera Feed</h2>
             <video id="camera-feed" width="100%" autoplay></video>
@@ -122,12 +116,10 @@
             <button id="continue-camera">Continue</button>
         </section>
 
-        <!-- Countdown and Log Page -->
         <section id="countdown-log" style="display: none;">
             <div id="countdown-timer"></div>
         </section>
 
-        <!-- Exercise Log Page -->
         <section id="log-page" style="display: none;">
             <h2>Exercise Log</h2>
             <ul id="exercise-log"></ul>
@@ -135,7 +127,6 @@
             <button id="do-another-exercise">Do Another Exercise</button>
         </section>
 
-        <!-- Workout Summary Page -->
         <section id="workout-summary" style="display: none;">
             <h2>Workout Summary</h2>
             <ul id="summary-log"></ul>
@@ -143,39 +134,30 @@
             <button id="rate-workout">Rate Workout</button>
         </section>
 
-        <!-- Finish Workout Page -->
         <section id="finish-workout-page" style="display:none;">
             <h2>Finish Workout</h2>
             <button id="finish">Finish</button>
             <button id="rate">Rate Workout</button>
         </section>
 
-        <!-- Feedback Section -->
         <section id="feedback-section" style="display:none; text-align:center;">
             <h2>Feedback</h2>
             <iframe src="https://form.jotform.com/242535238308456" width="100%" height="500" frameborder="0"></iframe>
         </section>
 
-        <!-- Advertisement -->
         <img id="advertisement" src="https://i.postimg.cc/KzYN3fnh/output-onlinepngtools.png" alt="Advertisement">
     </div>
 
-    <!-- JavaScript -->
     <script>
-        // Check if the overlay has been shown before
         if (!sessionStorage.getItem('overlayClosed')) {
-            // Display the overlay image
             document.getElementById('overlay-image').style.display = 'block';
         } else {
-            // Display the main content if the overlay was closed before
             document.getElementById('personalization').style.display = 'block';
         }
 
-        // Close button for the overlay image
         document.getElementById('close-overlay').addEventListener('click', function() {
             document.getElementById('overlay-image').style.display = 'none';
             document.getElementById('personalization').style.display = 'block';
-            // Set session storage to prevent the overlay from showing again
             sessionStorage.setItem('overlayClosed', 'true');
         });
     </script>
